@@ -5,6 +5,10 @@ var Enemy = function() {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
+    this.xStart = -100;
+    this.speed = 200;
+    this.x = this.xStart;
+    this.y = 150;
     this.sprite = 'images/enemy-bug.png';
 }
 
@@ -14,10 +18,13 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x = this.x + this.speed * dt;
 }
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
+    console.log(this.x);
+    console.log(this.y);
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     //ctx.drawImage(Resources.get(this.sprite), 300, 300);
 }
