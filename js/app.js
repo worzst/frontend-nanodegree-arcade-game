@@ -10,6 +10,7 @@ var Enemy = function() {
     this.x = this.xStart;
     this.y = 145;
     this.sprite = 'images/enemy-bug.png';
+    this.reset();
 }
 
 // Update the enemy's position, required method for game
@@ -36,14 +37,22 @@ Enemy.prototype.render = function() {
 // Reset the enemy so he doesn't run off the screen and never come back :-)
 Enemy.prototype.reset = function() {
     this.x = this.xStart;
+    this.speed = this.getRandomMinMax(150, 500);
+    //console.log(this.getRandomMinMax(1,3));
     var randNumb = Math.random();
-    if (randNumb < 0.33) {
-        this.y = 45;
-    } else if (randNumb < 0.66) {
+    if (randNumb < 0.333) {
+        this.y = 60;
+    } else if (randNumb < 0.666) {
         this.y = 145
     } else {
-        this.y = 245;
+        this.y = 230;
     }
+}
+
+Enemy.prototype.getRandomMinMax = function(min, max) {
+  var speed = Math.floor(Math.random() * (max - min)) + min;
+  console.log(speed);
+  return speed;
 }
 
 // Now write your own player class
@@ -51,12 +60,14 @@ Enemy.prototype.reset = function() {
 // a handleInput() method.
 var Player = function() {
     this.sprite = 'images/char-boy.png';
+    this.x = 200
+    this.y = 310;
 }
 Player.prototype.update = function() {
 
 }
 Player.prototype.render = function() {
-
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 Player.prototype.handleInput = function() {
 
