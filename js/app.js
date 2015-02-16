@@ -8,7 +8,7 @@ var Enemy = function() {
     this.xStart = -100;
     this.speed = 200;
     this.x = this.xStart;
-    this.y = 150;
+    this.y = 145;
     this.sprite = 'images/enemy-bug.png';
 }
 
@@ -19,6 +19,10 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x = this.x + this.speed * dt;
+
+    if (this.x > 550) {
+        this.reset();
+    }
 }
 
 // Draw the enemy on the screen, required method for game
@@ -27,6 +31,12 @@ Enemy.prototype.render = function() {
     console.log(this.y);
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     //ctx.drawImage(Resources.get(this.sprite), 300, 300);
+}
+
+// Reset the enemy so he doesn't run off the screen and never come back :-)
+Enemy.prototype.reset = function() {
+    this.x = this.xStart;
+    this.y = 145;
 }
 
 // Now write your own player class
