@@ -27,8 +27,8 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    console.log(this.x);
-    console.log(this.y);
+    //console.log(this.x);
+    //console.log(this.y);
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     //ctx.drawImage(Resources.get(this.sprite), 300, 300);
 }
@@ -36,7 +36,14 @@ Enemy.prototype.render = function() {
 // Reset the enemy so he doesn't run off the screen and never come back :-)
 Enemy.prototype.reset = function() {
     this.x = this.xStart;
-    this.y = 145;
+    var randNumb = Math.random();
+    if (randNumb < 0.33) {
+        this.y = 45;
+    } else if (randNumb < 0.66) {
+        this.y = 145
+    } else {
+        this.y = 245;
+    }
 }
 
 // Now write your own player class
