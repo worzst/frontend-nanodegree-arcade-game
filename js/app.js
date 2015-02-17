@@ -6,9 +6,9 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.xStart = -100;
-    this.speed = 200;
-    this.x = this.xStart;
-    this.y = 145;
+    this.xEnd = 550;
+    this.speedMin = 150;
+    this.speedMax = 500;
     this.sprite = 'images/enemy-bug.png';
     this.reset();
 }
@@ -21,7 +21,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     this.x = this.x + this.speed * dt;
 
-    if (this.x > 550) {
+    if (this.x > this.xEnd) {
         this.reset();
     }
 }
@@ -37,15 +37,15 @@ Enemy.prototype.render = function() {
 // Reset the enemy so he doesn't run off the screen and never come back :-)
 Enemy.prototype.reset = function() {
     this.x = this.xStart;
-    this.speed = this.getRandomMinMax(150, 500);
+    this.speed = this.getRandomMinMax(this.speedMin, this.speedMax);
     //console.log(this.getRandomMinMax(1,3));
     var randNumb = Math.random();
     if (randNumb < 0.333) {
-        this.y = 60;
+        this.y = 61;
     } else if (randNumb < 0.666) {
-        this.y = 145
+        this.y = 144
     } else {
-        this.y = 230;
+        this.y = 227;
     }
 }
 
@@ -60,17 +60,49 @@ Enemy.prototype.getRandomMinMax = function(min, max) {
 // a handleInput() method.
 var Player = function() {
     this.sprite = 'images/char-boy.png';
-    this.x = 200
-    this.y = 310;
+    this.reset();
 }
 Player.prototype.update = function() {
-
+    this.checkColision();
+}
+Player.prototype.checkColision = function() {
+    // check if Player is on water
+    if (this.y < 0) {
+        this.reset();
+    }
+    else if (this.y === 61 || this.y === 144 || this.y === 227) {
+        console.log('check started');
+        for (enemy in allEnemies) {
+            console.log('check enemies loop started');
+            if (this.y === enemy.y) {
+                if (this.x === enemy.x) {
+                    console.log('should reset');
+                    this.reset();
+                }
+            }
+        }
+    }
 }
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
-Player.prototype.handleInput = function() {
-
+Player.prototype.handleInput = function(key) {
+    if (key === 'left') {
+        this.x = this.x -101;
+    }
+    else if (key === 'right') {
+        this.x = this.x + 101;
+    }
+    else if (key === 'up') {
+        this.y = this.y - 83;
+    }
+    else if (key === 'down') {
+        this.y = this.y + 83;
+    }
+}
+Player.prototype.reset = function() {
+    this.x = 202;
+    this.y = 310;
 }
 
 // Now instantiate your objects.
