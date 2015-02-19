@@ -80,7 +80,7 @@ Player.prototype.checkColision = function() {
 			if (this.y == allEnemies[enemy].y) {
 				//console.log(enemy);
 				//console.log(this.x);
-				if (this.x < allEnemies[enemy].x + 40 && this.x > allEnemies[enemy].x - 40) {
+				if (this.x < allEnemies[enemy].x + 35 && this.x > allEnemies[enemy].x - 35) {
 					console.log('should reset');
 					this.reset();
 				}
@@ -121,10 +121,14 @@ var player = new Player();
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
 	var allowedKeys = {
-		37: 'left',
-		38: 'up',
-		39: 'right',
-		40: 'down'
+		37: 'left',		// left-arrow
+		65: 'left',		// A
+		38: 'up',		// up-arrow
+		87: 'up',		// W
+		39: 'right',	// right-arrow
+		68: 'right',	// D
+		40: 'down',		// down-arrow
+		83: 'down'		// S
 	};
 
 	player.handleInput(allowedKeys[e.keyCode]);
