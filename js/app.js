@@ -92,16 +92,16 @@ Player.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 Player.prototype.handleInput = function(key) {
-	if (key === 'left') {
+	if (key === 'left' && this.x > 0) {
 		this.x = this.x -101;
 	}
-	else if (key === 'right') {
+	else if (key === 'right' && this.x < 400) {
 		this.x = this.x + 101;
 	}
 	else if (key === 'up') {
 		this.y = this.y - 83;
 	}
-	else if (key === 'down') {
+	else if (key === 'down' && this.y < 350) {
 		this.y = this.y + 83;
 	}
 }
