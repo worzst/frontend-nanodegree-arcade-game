@@ -75,8 +75,8 @@ Player.prototype.checkColision = function() {
 		for (enemy in allEnemies) {
 			//console.log(enemy);
 			//console.log('check enemies loop started');
-			console.log('player-y ' + this.y);
-			console.log('enemy-y ' + allEnemies[enemy].y);
+			//console.log('player-y ' + this.y);
+			//console.log('enemy-y ' + allEnemies[enemy].y);
 			if (this.y == allEnemies[enemy].y) {
 				//console.log(enemy);
 				//console.log(this.x);
@@ -116,6 +116,17 @@ var allEnemies = [new Enemy(), new Enemy(), new Enemy()];
 // Place the player object in a variable called player
 var player = new Player();
 
+function changeDifficulty() {
+	var difficulty = document.getElementById("difficulty").value;
+	if (difficulty === 'easy') {
+		allEnemies = [new Enemy(), new Enemy()];
+	} else if (difficulty === 'medium') {
+		allEnemies = [new Enemy(), new Enemy(), new Enemy()];
+	} else if (difficulty === 'hard') {
+		allEnemies = [new Enemy(), new Enemy(), new Enemy(), new Enemy()];
+	}
+	player.reset();
+}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
