@@ -1,1 +1,7 @@
+I didn’t use many recourses as I’m a little bit familiar with it because I try to learn Unity3d at the same time.
+
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+
+http://www.w3schools.com/tags/tag_select.asp
+
+https://developer.mozilla.org/en-US/docs/Web/API/document.getElementById

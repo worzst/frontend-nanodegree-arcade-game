@@ -1,44 +1,35 @@
 // Enemies our player must avoid
 var Enemy = function() {
-	// Variables applied to each of our instances go here,
-	// we've provided one for you to get started
-
-	// The image/sprite for our enemies, this uses
-	// a helper we've provided to easily load images
-	this.xStart = -100;
-	this.xEnd = 550;
-	this.speedMin = 150;
-	this.speedMax = 500;
+	this.xStart = -100; // where the enemy starts on X
+	this.xEnd = 550; // where the enemy resets on X
+	this.speedMin = 150; // minimum speed for the enemies
+	this.speedMax = 500; // maximum speed for the enemies
 	this.sprite = 'images/enemy-bug.png';
 	this.reset();
 }
 
-// Update the enemy's position, required method for game
+// Update the enemy's position
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-	// You should multiply any movement by the dt parameter
-	// which will ensure the game runs at the same speed for
-	// all computers.
 	this.x = this.x + this.speed * dt;
 
+	// if enemy runs out of screen -> reset
 	if (this.x > this.xEnd) {
 		this.reset();
 	}
 }
 
-// Draw the enemy on the screen, required method for game
+// Draw the enemy on the screen
 Enemy.prototype.render = function() {
-	//console.log(this.x);
-	//console.log(this.y);
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-	//ctx.drawImage(Resources.get(this.sprite), 300, 300);
 }
 
-// Reset the enemy so he doesn't run off the screen and never come back :-)
+// Reset the enemy
 Enemy.prototype.reset = function() {
 	this.x = this.xStart;
+	// set speed to a random speed between speedMin and speedMax
 	this.speed = this.getRandomMinMax(this.speedMin, this.speedMax);
-	//console.log(this.getRandomMinMax(1,3));
+	// if/else statement to choose which lane the enemy will use
 	var randNumb = Math.random();
 	if (randNumb < 0.333) {
 		this.y = 61;
@@ -49,48 +40,48 @@ Enemy.prototype.reset = function() {
 	}
 }
 
+// returns a random value between two values
 Enemy.prototype.getRandomMinMax = function(min, max) {
-	var speed = Math.floor(Math.random() * (max - min)) + min;
-	//console.log(speed);
-	return speed;
+	var randVal = Math.floor(Math.random() * (max - min)) + min;
+	return randVal;
 }
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// player class
 var Player = function() {
 	this.sprite = 'images/char-boy.png';
 	this.reset();
 }
+
+// player update function in which it checks for collision every time
 Player.prototype.update = function() {
 	this.checkColision();
 }
+
+// function to check for collision with an enemy
 Player.prototype.checkColision = function() {
 	// check if Player is on water
 	if (this.y < 0) {
 		this.reset();
 	}
+	// else check if enemy is on a lane
 	else if (this.y === 61 || this.y === 144 || this.y === 227) {
-		//console.log('check started');
+		// go through all enemies and check if player and enemy collide
 		for (enemy in allEnemies) {
-			//console.log(enemy);
-			//console.log('check enemies loop started');
-			//console.log('player-y ' + this.y);
-			//console.log('enemy-y ' + allEnemies[enemy].y);
 			if (this.y == allEnemies[enemy].y) {
-				//console.log(enemy);
-				//console.log(this.x);
 				if (this.x < allEnemies[enemy].x + 35 && this.x > allEnemies[enemy].x - 35) {
-					console.log('should reset');
 					this.reset();
 				}
 			}
 		}
 	}
 }
+
+// render player image onscreen
 Player.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
+
+// get key inputs and move player
 Player.prototype.handleInput = function(key) {
 	if (key === 'left' && this.x > 0) {
 		this.x = this.x -101;
@@ -105,17 +96,19 @@ Player.prototype.handleInput = function(key) {
 		this.y = this.y + 83;
 	}
 }
+
+// function to reset the player
 Player.prototype.reset = function() {
 	this.x = 202;
 	this.y = 393;
 }
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
+// allEnemies array to keep enemy objects inside
 var allEnemies = [new Enemy(), new Enemy(), new Enemy()];
-// Place the player object in a variable called player
+// player object
 var player = new Player();
 
+// function to reset difficulty - gets the difficulty value from a dropdown, changes the allEnemies array and resets the player.
 function changeDifficulty() {
 	var difficulty = document.getElementById("difficulty").value;
 	if (difficulty === 'easy') {
@@ -130,6 +123,7 @@ function changeDifficulty() {
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
+// added support to play with WASD controls
 document.addEventListener('keyup', function(e) {
 	var allowedKeys = {
 		37: 'left',		// left-arrow

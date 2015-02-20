@@ -1,0 +1,10 @@
+TODO
+
+URGENT:
+
+
+WISHES:
+1. Items in game which have some form of use
+2. Score counter which counts points as long as player is on the streets
+	2.1. Add life support, so for example player has 3 lives and score will be for the run until he loses all his lives.
+3. Whatever comes to my mind afterwards.
